@@ -1,9 +1,8 @@
 import { Database } from '../database.js'
 import { randomUUID } from 'node:crypto'
 
-const database = new Database()
-
 export async function createTaskRouteHandler(request, response) {
+  const database = new Database()
   const { title, description } = request.body
 
   if (!title || !description) {

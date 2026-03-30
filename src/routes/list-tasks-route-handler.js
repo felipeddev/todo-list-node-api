@@ -1,8 +1,8 @@
 import { Database } from '../database.js'
 
-const database = new Database()
-
 export async function listTasksRouteHandler(request, response) {
+  const database = new Database()
+
   const { search } = request.query
 
   const tasks = await database.select('tasks', search ? {
@@ -10,6 +10,5 @@ export async function listTasksRouteHandler(request, response) {
     description: search,
   } : null)
 
-  console.log(tasks)
   response.end(JSON.stringify(tasks))
 }
