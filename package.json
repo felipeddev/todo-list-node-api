@@ -1,0 +1,13 @@
+{
+  "name": "todo-list",
+  "version": "1.0.0",
+  "description": "API em NodeJS para realizar o gerenciamento de tarefas com importarção em CSV.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --watch src/server.js"
+  },
+  "keywords": [],
+  "author": "Felipe D. Silva",
+  "license": "ISC",
+  "type": "module"
+}
