@@ -1,7 +1,5 @@
 import { Database } from '../database.js'
 
-const database = new Database()
-
 async function validateTaskId(id) {
   const tasks = await database.select('tasks', { id })
   const task = tasks[0]
@@ -26,6 +24,8 @@ async function validateTaskId(id) {
 }
 
 export async function updateTaskRouteHandler(request, response) {
+  const database = new Database()
+
   const { id } = request.params
   const { title, description } = request.body
 
