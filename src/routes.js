@@ -1,9 +1,10 @@
-import { Database } from "./database.js"
+import { createTaskRouteHandler } from "./routes/create-task-route-handler.js"
 import { buildRoutePath } from './utils/build-route-path.js'
 
-
-const database = new Database()
-
 export const routes = [
-
+  {
+    method: 'POST',
+    path: buildRoutePath('/tasks'),
+    handler: createTaskRouteHandler
+  }
 ]
