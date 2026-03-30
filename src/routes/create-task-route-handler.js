@@ -3,7 +3,7 @@ import { randomUUID } from 'node:crypto'
 
 const database = new Database()
 
-export function createTaskRouteHandler(request, response) {
+export async function createTaskRouteHandler(request, response) {
   const { title, description } = request.body
 
   if (!title || !description) {
@@ -26,7 +26,7 @@ export function createTaskRouteHandler(request, response) {
     updated_at: Date.now(),
   }
 
-  database.insert('tasks', task)
+  await database.insert('tasks', task)
 
   response.writeHead(201).end()
 }

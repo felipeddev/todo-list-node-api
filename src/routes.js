@@ -1,6 +1,7 @@
+import { buildRoutePath } from './utils/build-route-path.js'
 import { createTaskRouteHandler } from './routes/create-task-route-handler.js'
 import { listTasksRouteHandler } from './routes/list-tasks-route-handler.js'
-import { buildRoutePath } from './utils/build-route-path.js'
+import { updateTaskRouteHandler } from './routes/update-task-route-handler.js'
 
 export const routes = [
   {
@@ -12,5 +13,10 @@ export const routes = [
     method: 'GET',
     path: buildRoutePath('/tasks'),
     handler: listTasksRouteHandler
+  },
+  {
+    method: 'PUT',
+    path: buildRoutePath('/tasks/:id'),
+    handler: updateTaskRouteHandler,
   }
 ]

@@ -6,32 +6,43 @@ export class Database {
   #database = {}
 
   constructor() {
-    fs.readFile(databasePath, 'utf-8')
-      .then(data => {
-        this.#database = JSON.parse(data)
-      })
-      .catch(() => {
-        this.#persist()
+    this.#openDatabase()
+      .then(() => {
+        console.log('Database loaded successfully')
+      }).catch(err => {
+        console.error('Failed to open the database', err)
       })
   }
 
-  #persist() {
-    fs.writeFile(databasePath, JSON.stringify(this.#database))
+  async #openDatabase() {
+    try {
+      const data = await fs.readFile(databasePath, 'utf-8')
+      this.#database = JSON.parse(data)
+    } catch (err) {
+      await this.#persist()
+    } finally {
+      return this.#database
+    }
   }
 
-  insert(table, data) {
+  async #persist() {
+    await fs.writeFile(databasePath, JSON.stringify(this.#database))
+  }
+
+  async insert(table, data) {
     if (Array.isArray(this.#database[table])) {
       this.#database[table].push(data)
     } else {
       this.#database[table] = [data]
     }
 
-    this.#persist()
+    await this.#persist()
 
     return data
   }
 
-  select(table, search) {
+  async select(table, search) {
+    await this.#openDatabase()
     let data = this.#database[table] ?? []
 
     if (search) {
@@ -61,25 +72,25 @@ export class Database {
     return data
   }
 
-  update(table, id, data) {
+  async update(table, id, data) {
     const rowIndex = this.#database[table].findIndex(row => row.id === id)
 
     if (rowIndex > -1) {
       this.#database[table][rowIndex] = { id, ...data }
 
-      this.#persist()
+      await this.#persist()
     }
 
     return rowIndex
   }
 
-  delete(table, id) {
+  async delete(table, id) {
     const rowIndex = this.#database[table].findIndex(row => row.id === id)
 
     if (rowIndex > -1) {
       this.#database[table].splice(rowIndex, 1)
 
-      this.#persist()
+      await this.#persist()
     }
 
     return rowIndex
