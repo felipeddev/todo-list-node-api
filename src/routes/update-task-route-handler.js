@@ -1,6 +1,6 @@
 import { Database } from '../database.js'
 
-async function validateTaskId(id) {
+async function validateTaskId(id, database) {
   const tasks = await database.select('tasks', { id })
   const task = tasks[0]
 
@@ -40,7 +40,7 @@ export async function updateTaskRouteHandler(request, response) {
     return
   }
 
-  const { isValid, error, task } = await validateTaskId(id)
+  const { isValid, error, task } = await validateTaskId(id, database)
 
   if (!isValid) {
     response.writeHead(404).end(JSON.stringify(error))
