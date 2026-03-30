@@ -3,6 +3,7 @@ import { createTaskRouteHandler } from './routes/create-task-route-handler.js'
 import { deleteTaskRouteHandler } from './routes/delete-task-route-handler.js'
 import { listTasksRouteHandler } from './routes/list-tasks-route-handler.js'
 import { updateTaskRouteHandler } from './routes/update-task-route-handler.js'
+import { updateTaskStatusRouteHandler } from './routes/update-task-status-route-handler.js'
 
 export const routes = [
   {
@@ -24,5 +25,10 @@ export const routes = [
     method: 'DELETE',
     path: buildRoutePath('/tasks/:id'),
     handler: deleteTaskRouteHandler,
+  },
+  {
+    method: 'PATCH',
+    path: buildRoutePath('/tasks/:id/complete'),
+    handler: updateTaskStatusRouteHandler,
   }
 ]
