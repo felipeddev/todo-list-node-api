@@ -30,6 +30,8 @@ export class Database {
   }
 
   async insert(table, data) {
+    await this.#openDatabase()
+
     if (Array.isArray(this.#database[table])) {
       this.#database[table].push(data)
     } else {
@@ -73,6 +75,8 @@ export class Database {
   }
 
   async update(table, id, data) {
+    await this.#openDatabase()
+
     const rowIndex = this.#database[table].findIndex(row => row.id === id)
 
     if (rowIndex > -1) {
@@ -85,6 +89,8 @@ export class Database {
   }
 
   async delete(table, id) {
+    await this.#openDatabase()
+
     const rowIndex = this.#database[table].findIndex(row => row.id === id)
 
     if (rowIndex > -1) {
